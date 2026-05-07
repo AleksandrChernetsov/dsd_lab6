@@ -60,9 +60,9 @@ The project uses `<chrono>` for high‑resolution timing measurements. On non‑
 ## 📂 File Structure
 
 ```
-dsd_lab6/
-├── README.md
-├── dsd_lab6.slnx                     # Visual Studio solution file
+dsd_lab6.slnx                         # Visual Studio solution file
+README.md                             # This file
+dsd_lab6/                             # Project folder
 ├── dsd_lab6.vcxproj                  # Visual Studio project file
 ├── dsd_lab6.vcxproj.filters          # Project filters
 ├── Lab6_Main.cpp                     # Main program – benchmarks and comparisons
