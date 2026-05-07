@@ -46,20 +46,28 @@ int main() {
 
     cout << "Чернецов А.М. 24ВП1. Лабораторная работа №6." << endl;
 
-    int N;
+    int N1, N2; // N1 - мощность A, N2 - мощность B
     while (true) {
-        cout << "Введите мощность множеств N (N >= 1000): ";
-        if (!(cin >> N)) {
+        cout << "Введите мощность множества A (N_A >= 1000): ";
+        if (!(cin >> N1)) {
             cout << "Ошибка: введите целое число." << endl;
             cin.clear();
             cin.ignore(10000, '\n');
             continue;
         }
 
-        if (N < 1000) {
-            cout << "Внимание: N должно быть не меньше 1000. Попробуйте снова." << endl;
+        cout << "Введите мощность множества B (N_B >= 1000): ";
+        if (!(cin >> N2)) {
+            cout << "Ошибка: введите целое число." << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+            continue;
         }
-        else if (N > 5000) {
+
+        if (N1 < 1000 || N2 < 1000) {
+            cout << "Внимание: обе мощности должны быть не меньше 1000. Попробуйте снова." << endl;
+        }
+        else if (N1 > 5000 || N2 > 5000) {
             cout << "Предупреждение: при N > 5000 операции на списках (Лаб 1-4) будут очень долгими." << endl;
             cout << "Вы уверены, что хотите продолжить? (y/n): ";
             char confirm;
@@ -71,9 +79,10 @@ int main() {
         }
     }
 
-    // Диапазон значений: от 0 до 10N
+    // Диапазон значений: от 0 до 10 * max(N1, N2)
+    int maxN = max(N1, N2);
     int minV = 0;
-    int maxV = 10 * N;
+    int maxV = 10 * maxN;
     unsigned int seed = static_cast<unsigned int>(time(NULL));
 
     const int col_width = 20;
@@ -102,26 +111,29 @@ int main() {
     // Замеры времени для создания (с фиксацией seed для идентичности данных)
     srand(seed);
     start = high_resolution_clock::now();
-    Lab1_2::Node* A1 = Lab1_2::F5(N, minV, maxV, 'A');
-    Lab1_2::Node* B1 = Lab1_2::F5(N, minV, maxV, 'B');
+    Lab1_2::Node* A1 = Lab1_2::F5(N1, minV, maxV, 'A');
+    Lab1_2::Node* B1 = Lab1_2::F5(N2, minV, maxV, 'B');
     end = high_resolution_clock::now();
     cout << center_utf8(to_string(duration_cast<microseconds>(end - start).count()), col_width) << '|';
 
     srand(seed);
     start = high_resolution_clock::now();
-    Lab3::Set A3(N, minV, maxV, 'A'); Lab3::Set B3(N, minV, maxV, 'B');
+    Lab3::Set A3(N1, minV, maxV, 'A');
+    Lab3::Set B3(N2, minV, maxV, 'B');
     end = high_resolution_clock::now();
     cout << center_utf8(to_string(duration_cast<microseconds>(end - start).count()), col_width) << '|';
 
     srand(seed);
     start = high_resolution_clock::now();
-    Lab4::Set A4(N, minV, maxV, 'A'); Lab4::Set B4(N, minV, maxV, 'B');
+    Lab4::Set A4(N1, minV, maxV, 'A');
+    Lab4::Set B4(N2, minV, maxV, 'B');
     end = high_resolution_clock::now();
     cout << center_utf8(to_string(duration_cast<microseconds>(end - start).count()), col_width) << '|';
 
     srand(seed);
     start = high_resolution_clock::now();
-    Lab5::Set A5(N, minV, maxV, 'A'); Lab5::Set B5(N, minV, maxV, 'B');
+    Lab5::Set A5(N1, minV, maxV, 'A');
+    Lab5::Set B5(N2, minV, maxV, 'B');
     end = high_resolution_clock::now();
     cout << center_utf8(to_string(duration_cast<microseconds>(end - start).count()), col_width) << '|' << endl;
     print_line();
